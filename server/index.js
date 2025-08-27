@@ -1,53 +1,3 @@
-// import express from "express";
-// import dotenv from "dotenv";
-// import cors from "cors";
-// import cookieParser from "cookie-parser";
-// import mongoose from "mongoose";
-// import authRoutes from "./routes/AuthRoutes.js";
-// import contactsRoutes from "./routes/ContactsRoutes.js";
-// // import setupSocket from "./socket.js";
-// import messageRoutes from "./routes/MessagesRoutes.js";
-// import channelRoutes from "./routes/ChannelRoutes.js";
-
-// dotenv.config();
-
-// const app = express();
-// const port = process.env.PORT || 3000;
-// const databaseURL = process.env.MONGODB_URI;
-
-// app.use(
-//   cors({
-//     origin: [process.env.ORIGIN],
-//     methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
-//     credentials: true,
-//   })
-// );
-
-// app.use("/uploads/profiles", express.static("uploads/profiles"));
-// app.use("/uploads/files", express.static("uploads/files"));
-
-// app.use(cookieParser());
-// app.use(express.json());
-
-// app.use("/api/auth", authRoutes);
-// app.use("/api/contacts", contactsRoutes);
-// app.use("/api/messages", messageRoutes);
-// app.use("/api/channel", channelRoutes);
-
-// // const server = app.listen(port, () => {
-// //   console.log(`Server is running at http://localhost:${port}`);
-// // });
-
-// app.get("/", (req, res) => res.send("API is running"));
-
-// // setupSocket(server);
-// mongoose
-//   .connect(databaseURL)
-//   .then(() => console.log("DB Connection Successful"))
-//   .catch((err) => console.log(err.message));
-
-// api/index.js
-
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
@@ -55,14 +5,17 @@ import cookieParser from "cookie-parser";
 import mongoose from "mongoose";
 import authRoutes from "./routes/AuthRoutes.js";
 import contactsRoutes from "./routes/ContactsRoutes.js";
+import setupSocket from "./socket.js";
 import messageRoutes from "./routes/MessagesRoutes.js";
 import channelRoutes from "./routes/ChannelRoutes.js";
 
 dotenv.config();
 
 const app = express();
+// const port = process.env.PORT || 3000;
+const port = 3000;
+const databaseURL = process.env.MONGODB_URI;
 
-// Middlewares
 app.use(
   cors({
     origin: [process.env.ORIGIN],
@@ -71,23 +24,25 @@ app.use(
   })
 );
 
+app.use("/uploads/profiles", express.static("uploads/profiles"));
+app.use("/uploads/files", express.static("uploads/files"));
+
 app.use(cookieParser());
 app.use(express.json());
 
-// Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/contacts", contactsRoutes);
 app.use("/api/messages", messageRoutes);
 app.use("/api/channel", channelRoutes);
 
+const server = app.listen(port, () => {
+  console.log(`Server is running at http://localhost:${port}`);
+});
+
 app.get("/", (req, res) => res.send("API is running"));
 
-// DB connection (connect only once, not per request)
+setupSocket(server);
 mongoose
-  .connect(process.env.MONGODB_URI)
-  .then(() => console.log("DB Connected"))
-  .catch((err) => console.error("MongoDB error:", err.message));
-
-// ❌ No app.listen()
-// ✅ Export Express app as a handler
-export default app;
+  .connect(databaseURL)
+  .then(() => console.log("DB Connection Successful"))
+  .catch((err) => console.log(err.message));
