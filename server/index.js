@@ -40,7 +40,7 @@ app.use("/api/channel", channelRoutes);
 
 app.get("/", (req, res) => res.send("API is running"));
 
-setupSocket(server);
+// setupSocket(server);
 mongoose
   .connect(databaseURL)
   .then(() => console.log("DB Connection Successful"))
