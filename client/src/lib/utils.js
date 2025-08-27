@@ -1,5 +1,4 @@
 import { clsx } from "clsx";
-import { render } from "ejs";
 import { twMerge } from "tailwind-merge";
 import animationData from "@/assets/lottie-json";
 
