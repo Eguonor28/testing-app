@@ -3,7 +3,7 @@ import victory from "../../assets/victory.svg";
 import Background from "../../assets/login2.png";
 import { Input } from "../../components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@radix-ui/react-tabs";
-import { Button } from "../../components/ui/button";
+import { Button } from "../../components/ui/Button";
 import { toast } from "sonner";
 import apiClient from "@/lib/api-client";
 import { LOGIN_ROUTE, SIGNUP_ROUTE } from "@/utils/constants";
