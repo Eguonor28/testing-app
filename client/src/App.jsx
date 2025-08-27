@@ -3,7 +3,6 @@ import Auth from "./pages/auth";
 import Profile from "./pages/profile";
 import Chat from "./pages/chat";
 
-import { Button } from "./components/ui/button";
 import {
   Navigate,
   Route,
